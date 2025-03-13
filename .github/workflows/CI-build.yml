@@ -3,7 +3,7 @@ name: gibMacOS Build
 on:
   push:
     branches:
-      - main
+      - CI
   workflow_dispatch:
 
 jobs:
