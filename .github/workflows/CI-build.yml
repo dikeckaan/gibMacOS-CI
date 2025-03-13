@@ -23,7 +23,7 @@ jobs:
       - name: 📥 Download macOS Installer using gibMacOS
         run: |
           chmod +x gibMacOS.command
-          ./gibMacOS.command --headless
+          ./gibMacOS.command -r
 
       - name: 🗂 Archive the macOS Installer
         run: |
