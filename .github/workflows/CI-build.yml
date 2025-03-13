@@ -1,0 +1,41 @@
+name: gibMacOS Build
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: 📥 Clone the repository
+        uses: actions/checkout@v3
+
+      - name: 🏗 Set up Python
+        run: |
+          python3 -m ensurepip --upgrade
+          python3 -m pip install --upgrade pip wheel
+
+      - name: 📥 Download macOS Installer using gibMacOS
+        run: |
+          chmod +x gibMacOS.command
+          ./gibMacOS.command --headless
+
+      - name: 🗂 Archive the macOS Installer
+        run: |
+          cd "macOS Downloads"
+          tar -cvf macOS-installer.tar Install*
+
+      - name: 🔪 Split the archive into 4GB parts
+        run: |
+          split -b 4G macOS Downloads/macOS-installer.tar macOS-part-
+
+      - name: 📦 Upload the split parts as artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macOS-Installer
+          path: macOS-part-*
+
