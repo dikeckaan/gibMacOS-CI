@@ -14,10 +14,11 @@ jobs:
       - name: 📥 Clone the repository
         uses: actions/checkout@v4
 
-      - name: 🏗 Set up Python
+      - name: 🏗 Set up Python Virtual Environment
         run: |
-          python3 -m ensurepip --upgrade
-          python3 -m pip install --upgrade pip wheel
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip wheel
 
       - name: 📥 Download macOS Installer using gibMacOS
         run: |
